@@ -8,9 +8,9 @@ lab_1 = [['#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', 
           ['#', ' ', ' ', '#', ' ', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', ' ', '#'], 
           ['#', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', '#', '#', ' ', ' ', ' ', ' '], 
           ['#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#']]
-
+(1,0)
 lab_2 = [['#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#'], 
-          [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#', ' ', ' ', '#', '#', ' ', '#'], 
+          [' ', ' ', '#', ' ', ' ', ' ', ' ', ' ', '#', ' ', ' ', '#', '#', ' ', '#'], 
           ['#', ' ', ' ', ' ', ' ', ' ', '#', ' ', '#', ' ', ' ', '#', ' ', ' ', '#'], 
           ['#', ' ', ' ', ' ', ' ', ' ', '#', ' ', '#', ' ', ' ', '#', '#', ' ', '#'], 
           ['#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#', ' ', ' ', '#'], 
@@ -25,7 +25,7 @@ lab_3 = [['#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', 
           ['#', '#', ' ', '#', ' ', ' ', ' ', ' ', '#', ' ', ' ', '#', ' ', ' ', ' '], 
           ['#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#']]
 
-def possiveis_passos(trajeto, pos_atual, meu_lab):
+def proximo_passo(pos_atual, trajeto, meu_lab):
 
     direcoes = [( pos_atual[0], pos_atual[-1]+1 ),
                 ( pos_atual[0]+1, pos_atual[-1] ),
@@ -39,18 +39,16 @@ def possiveis_passos(trajeto, pos_atual, meu_lab):
 
     return trajeto.top()
 
-def proximo_passo(trajeto, pos_atual, meu_lab, ):
-    
-    if pos_atual == (1,0): #1º passo sempre p/ direita
-        if meu_lab[1][1] == '#':
-            return False
-        else:
-            return (1,1)
+def faz_trajeto(coordenada, trajeto, labirinto, primeiro_passo=True):
+    if coordenada == (1, 0) and not primeiro_passo:
+        return False
+    elif coordenada == labirinto[-2][-1]:
+        return True
     else:
-        return 
+        trajeto.push(coordenada)
+        return faz_trajeto(proximo_passo(coordenada, trajeto, labirinto), trajeto,labirinto, False)
 
+INICIO = (1,0)
 trajetoria = Pilha()
-trajetoria.push((1,0))
-coordenada = (1,1)
 
-print(possiveis_passos(trajetoria, coordenada, lab_2))
+print(faz_trajeto(INICIO, trajetoria, lab_2))
