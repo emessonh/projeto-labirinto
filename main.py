@@ -1,54 +1,13 @@
-from gera_lab_map2 import gera_lab
+from gera_lab_map2 import *
 from Pilhas import Pilha
+from eh_possivel_sair import *
 
-lab_1 = [['#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#'], 
-          [' ', '#', ' ', ' ', ' ', ' ', '#', '#', ' ', ' ', ' ', ' ', '#', ' ', '#'], 
-          ['#', ' ', '#', ' ', ' ', '#', ' ', '#', '#', ' ', ' ', ' ', ' ', ' ', '#'], 
-          ['#', ' ', ' ', ' ', '#', ' ', ' ', '#', ' ', ' ', ' ', ' ', ' ', ' ', '#'], 
-          ['#', ' ', ' ', '#', ' ', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', ' ', '#'], 
-          ['#', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', '#', '#', ' ', ' ', ' ', ' '], 
-          ['#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#']]
-(1,0)
-lab_2 = [['#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#'], 
-          [' ', ' ', '#', ' ', ' ', ' ', ' ', ' ', '#', ' ', ' ', '#', '#', ' ', '#'], 
-          ['#', ' ', ' ', ' ', ' ', ' ', '#', ' ', '#', ' ', ' ', '#', ' ', ' ', '#'], 
-          ['#', ' ', ' ', ' ', ' ', ' ', '#', ' ', '#', ' ', ' ', '#', '#', ' ', '#'], 
-          ['#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#', ' ', ' ', '#'], 
-          ['#', ' ', ' ', '#', ' ', ' ', ' ', '#', '#', ' ', ' ', '#', ' ', ' ', ' '], 
-          ['#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#']]
+lab = gera_lab(7,15)
 
-lab_3 = [['#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#'], 
-          [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', ' ', '#'], 
-          ['#', ' ', ' ', ' ', '#', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', ' ', '#'], 
-          ['#', ' ', '#', '#', ' ', '#', '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'], 
-          ['#', ' ', ' ', ' ', ' ', ' ', '#', '#', ' ', ' ', ' ', ' ', '#', ' ', '#'], 
-          ['#', '#', ' ', '#', ' ', ' ', ' ', ' ', '#', ' ', ' ', '#', ' ', ' ', ' '], 
-          ['#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#']]
-
-def proximo_passo(pos_atual, trajeto, meu_lab):
-
-    direcoes = [( pos_atual[0], pos_atual[-1]+1 ),
-                ( pos_atual[0]+1, pos_atual[-1] ),
-                ( pos_atual[0], pos_atual[-1]-1 ),
-                ( pos_atual[0]-1, pos_atual[-1] )]
-    
-    for direcao in direcoes:
-        if meu_lab[direcao[0]][direcao[-1]] != "#":
-            if direcao != trajeto.top():
-                return direcao
-
-    return trajeto.top()
-
-def faz_trajeto(coordenada, trajeto, labirinto, primeiro_passo=True):
-    if coordenada == (1, 0) and not primeiro_passo:
-        return False
-    elif coordenada == labirinto[-2][-1]:
-        return True
-    else:
-        trajeto.push(coordenada)
-        return faz_trajeto(proximo_passo(coordenada, trajeto, labirinto), trajeto,labirinto, False)
-
+print_lab(lab)
+caminho = Pilha()
 INICIO = (1,0)
-trajetoria = Pilha()
-
-print(faz_trajeto(INICIO, trajetoria, lab_2))
+caminho.push(INICIO)
+FIM = (len(lab)-2, len(lab[0])-1)
+coordenadas_visitadas = []
+print(eh_possivel_sair(lab, caminho, INICIO, FIM, coordenadas_visitadas))
