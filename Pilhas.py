@@ -18,3 +18,6 @@ class Pilha:
     
     def is_empty(self):
         return len(self.items) == 0
+
+if __name__ == '__main__':
+    None
