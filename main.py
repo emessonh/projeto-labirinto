@@ -32,37 +32,22 @@ def possiveis_passos(trajeto, pos_atual, meu_lab):
                 ( pos_atual[0], pos_atual[-1]-1 ),
                 ( pos_atual[0]-1, pos_atual[-1] )]
     
-    possiveis_passos = list()
-    
     for direcao in direcoes:
         if meu_lab[direcao[0]][direcao[-1]] != "#":
             if direcao != trajeto.top():
-                possiveis_passos.append(direcao)
+                return direcao
 
-    possiveis_passos.append(trajeto.top())
-
-    return possiveis_passos
+    return trajeto.top()
 
 def proximo_passo(trajeto, pos_atual, meu_lab, ):
-    """direita, baixo, esquerda, cima"""
-    #1º passo sempre p/ direita
-    ultima_pos = trajeto.top()
-
-    if pos_atual == (1,0):
+    
+    if pos_atual == (1,0): #1º passo sempre p/ direita
         if meu_lab[1][1] == '#':
             return False
         else:
             return (1,1)
     else:
-        #direita
-        #baixo
-        #esquerda
-        #cima
-        '''
-        if meu_lab[pos_atual[0], pos_atual[-1]+1] == " ":
-            return (pos_atual[0], pos_atual[-1]+1)
-        '''
-        pass
+        return 
 
 trajetoria = Pilha()
 trajetoria.push((1,0))
